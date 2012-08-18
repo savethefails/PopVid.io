@@ -13,14 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require_tree .
 //= require underscore
 //= require backbone
-//
+//= require backbone-relational
 //= require .//popvid_io
-//
 //= require_tree ../templates/
 //= require_tree .//models
 //= require_tree .//collections
 //= require_tree .//views
 //= require_tree .//routers
+//= require_tree .
