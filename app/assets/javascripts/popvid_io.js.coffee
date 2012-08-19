@@ -4,7 +4,7 @@ window.PopVidio =
   Views: {}
   Routers: {}
   init: ->
-  	new PopVidio.Routers.Videos
+  	@video_router = new PopVidio.Routers.Videos
   	Backbone.history.start(pushState: true)
 
 $(document).ready ->

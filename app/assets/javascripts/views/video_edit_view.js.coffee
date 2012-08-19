@@ -2,6 +2,8 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 	
 	template: JST['videos/edit']
 
+	youtube_script_template: JST['videos/youtube_api_script']
+
 	initialize: ->
 		console.log 'view init'
 		@model.on('change', @render, this)
@@ -10,7 +12,17 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 		console.log 'view render'
 		console.log JSON.stringify(@model)
 		@$el.html(@template(video: @model))
+		@comments=@model.get('comments')
+		if !@added_youtube_scripts
+			@added_youtube_scripts = true
+			$('body').append(@youtube_script_template())
 		this
 
-	reset: ->
-		console.log 'reset!'
+	createYoutubePlayer: ->
+		console.log 'createYoutubePlayer'
+		console.log @
+		window.player = new YT.Player 'youtube_player', {
+				height: '390'
+				width: '640'
+				videoId: @model.get('youtube_id')
+			}

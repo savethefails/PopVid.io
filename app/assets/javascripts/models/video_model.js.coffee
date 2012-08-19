@@ -4,8 +4,16 @@ class PopVidio.Models.Video extends Backbone.RelationalModel
 
 	initialize: ->
 		console.log 'model init'
-							# console.log data
-		# @fetch(success: (data) ->
-		# 					console.log 'model init'
-		# 					console.log data
-		# 		)
+
+	paramRoot: 'video'
+	 	 
+	relations: [
+		type: Backbone.HasMany
+		key: 'comments'
+		relatedModel: 'PopVidio.Models.Comment'
+		collectionType: 'PopVidio.Collections.CommentsCollection'
+		includeInJSON: false
+		reverseRelation:
+		  key: 'post_id',
+		  includeInJSON: 'id'
+	]

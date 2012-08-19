@@ -1,1 +1,3 @@
-<h3>Video: <%= JSON.stringify(@video) %> </h3>
+<h3>Video: <%= @video.get('youtube_id') %></h3>
+<h3>Comments: <%= JSON.stringify(@video.get('comments')) %></h3>
+<div id="youtube_player"></div>
