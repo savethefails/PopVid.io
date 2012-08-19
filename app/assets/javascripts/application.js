@@ -16,10 +16,11 @@
 //= require underscore
 //= require backbone
 //= require backbone-relational
-//= require youtube_api
 //= require .//popvid_io
 //= require_tree ../templates/
 //= require_tree .//models
 //= require_tree .//collections
 //= require_tree .//views
 //= require_tree .//routers
+//= require youtube_api
+//= require_tree .

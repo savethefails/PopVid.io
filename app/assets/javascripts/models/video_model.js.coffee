@@ -14,6 +14,6 @@ class PopVidio.Models.Video extends Backbone.RelationalModel
 		collectionType: 'PopVidio.Collections.CommentsCollection'
 		includeInJSON: false
 		reverseRelation:
-		  key: 'post_id',
+		  key: 'video_id',
 		  includeInJSON: 'id'
 	]
