@@ -22,25 +22,25 @@ class PopVidio.Models.Player extends Backbone.Model
 	createYoutubePlayer: =>
 		console.log 'create player initalized'
 		@YTPlayer = new YT.Player 'youtube_player', {
-				height: @.get('height')
-				width: @.get('width')
-				videoId: @.get('youtube_id')
+				height: @get('height')
+				width: @get('width')
+				videoId: @get('youtube_id')
 				events:
 					'onReady': @onPlayerReady
 					'onStateChange': @onPlayerStateChange
 			}
 
 	onPlayerReady: (event) ->
-		event.target.playVideo()
+		# event.target.playVideo()
 
 	onPlayerStateChange: (event) =>
 		console.log 'player state change'
 		console.log @
-		@.set({state: event.data})
-		if @.get('state') == YT.PlayerState.PLAYING
+		@set({state: event.data})
+		if @get('state') == YT.PlayerState.PLAYING
 			@intervalID = setInterval (=>
-				@.set ({currentTime: @YTPlayer.getCurrentTime()})
-				console.log @.get('currentTime')
+				@set ({currentTime: @YTPlayer.getCurrentTime()})
+				console.log @get('currentTime')
 				), 1000
 		else
 			clearInterval @intervalID
