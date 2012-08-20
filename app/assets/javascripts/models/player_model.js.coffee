@@ -30,18 +30,18 @@ class PopVidio.Models.Player extends Backbone.Model
 					'onStateChange': @onPlayerStateChange
 			}
 
-	onPlayerReady: (event) ->
+	onPlayerReady: (event) =>
 		# event.target.playVideo()
 
 	onPlayerStateChange: (event) =>
 		console.log 'player state change'
-		console.log @
 		@set({state: event.data})
 		if @get('state') == YT.PlayerState.PLAYING
 			@intervalID = setInterval (=>
-				@set ({currentTime: @YTPlayer.getCurrentTime()})
-				console.log @get('currentTime')
-				), 1000
+				rounded_timed = Math.floor(@YTPlayer.getCurrentTime()/0.5)*0.5
+				@set ({currentTime: rounded_timed})
+				@trigger("new:time", @get('currentTime'))
+				), 413
 		else
 			clearInterval @intervalID
 		
