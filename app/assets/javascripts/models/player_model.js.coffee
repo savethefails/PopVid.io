@@ -11,6 +11,13 @@ class PopVidio.Models.Player extends Backbone.Model
 	initialize: ->
 		console.log 'player model initialize'
 
+		#local functions hook directly into changes on the model
+		@.on('change:state', @setCurrentTime)
+
+		#changes on the model are also broadcast out since this is a popular model
+		@.on 'change:state', -> $.publish 'change:playerState', {state: @get('state')}
+		@.on 'change:currentTime', -> $.publish "new:time", {time: @get('currentTime')}
+
 		# Create a function that the Youtube API can reach,
 		# that references this model so we can keep all calls in here
 		window.onYouTubeIframeAPIReady = =>
@@ -26,22 +33,29 @@ class PopVidio.Models.Player extends Backbone.Model
 				width: @get('width')
 				videoId: @get('youtube_id')
 				events:
-					'onReady': @onPlayerReady
-					'onStateChange': @onPlayerStateChange
+					'onReady': (event) ->
+									@set ({currentTime: 0})
+					'onStateChange': @setPlayerState
 			}
 
-	onPlayerReady: (event) =>
-		# event.target.playVideo()
-
-	onPlayerStateChange: (event) =>
-		console.log 'player state change'
+	setPlayerState: (event) =>
+		console.log "player state change to #{event.data}"
 		@set({state: event.data})
+
+	setCurrentTime: =>
 		if @get('state') == YT.PlayerState.PLAYING
 			@intervalID = setInterval (=>
-				rounded_timed = Math.floor(@YTPlayer.getCurrentTime()/0.5)*0.5
-				@set ({currentTime: rounded_timed})
-				@trigger("new:time", @get('currentTime'))
+				@set ({currentTime: @roundedTime()})
 				), 413
+
+		else if @get('state') == YT.PlayerState.PAUSED
+			@set ({currentTime: @roundedTime()})
+
 		else
 			clearInterval @intervalID
+
+	roundedTime: ->
+		Math.floor(@YTPlayer.getCurrentTime()/0.5)*0.5
+
+
 		

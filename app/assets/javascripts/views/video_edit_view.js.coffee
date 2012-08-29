@@ -20,8 +20,7 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 
 		@comments_view = new PopVidio.Views.Comments(
 												    collection: @model.get('comments'), 
-												    el: @$('#comments'),
-												    player: @player
-												   )
+												    el: @$('#comments')
+												    )
 
 		this
