@@ -18,6 +18,8 @@ class PopVidio.Models.Player extends Backbone.Model
 		@.on 'change:state', -> $.publish 'change:playerState', {state: @get('state')}
 		@.on 'change:currentTime', -> $.publish "new:time", {time: @get('currentTime')}
 
+		$.subscribe "change:time", @skipToTime
+
 		# Create a function that the Youtube API can reach,
 		# that references this model so we can keep all calls in here
 		window.onYouTubeIframeAPIReady = =>
@@ -56,6 +58,12 @@ class PopVidio.Models.Player extends Backbone.Model
 
 	roundedTime: ->
 		Math.floor(@YTPlayer.getCurrentTime()/0.5)*0.5
+
+	skipToTime: (data) =>
+		@YTPlayer.seekTo data.time
+
+		if data.status.pause
+			@YTPlayer.pauseVideo()
 
 
 		
