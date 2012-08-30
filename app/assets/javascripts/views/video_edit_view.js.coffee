@@ -8,6 +8,8 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 		console.log 'view init'
 		@model.on('change', @render, this)
 		$.subscribe "new:popup", @addPopUp
+		$.subscribe 'new:time', @updateMarker
+
 
 	render: ->
 		console.log 'view render'
@@ -31,3 +33,9 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 		popup = data.popup
 		popUpView = new PopVidio.Views.PopUp(model: popup)
 		@$el.find('#pop_up').html(popUpView.$el)
+
+	updateMarker: (data) =>
+		percentDone = data.time / data.player.get('duration')
+		@$el.find('#marker').css left: percentDone*640+'px'
+
+

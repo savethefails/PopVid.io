@@ -16,7 +16,7 @@ class PopVidio.Models.Player extends Backbone.Model
 
 		#changes on the model are also broadcast out since this is a popular model
 		@.on 'change:state', -> $.publish 'change:playerState', {state: @get('state')}
-		@.on 'change:currentTime', -> $.publish "new:time", {time: @get('currentTime')}
+		@.on 'change:currentTime', => $.publish "new:time", {time: @get('currentTime'), player: @}
 
 		$.subscribe "change:time", @skipToTime
 
@@ -35,8 +35,10 @@ class PopVidio.Models.Player extends Backbone.Model
 				width: @get('width')
 				videoId: @get('youtube_id')
 				events:
-					'onReady': (event) ->
-									@set ({currentTime: 0})
+					'onReady': (event) =>
+									@set duration: @YTPlayer.getDuration()
+									@set currentTime: 0
+									
 					'onStateChange': @setPlayerState
 			}
 
