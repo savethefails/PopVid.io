@@ -7,6 +7,7 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 	initialize: (options) ->
 		console.log 'view init'
 		@model.on('change', @render, this)
+		$.subscribe "new:popup", @addPopUp
 
 	render: ->
 		console.log 'view render'
@@ -24,3 +25,9 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 												    )
 
 		this
+
+	addPopUp: (data) =>
+		console.log 'addPopup'
+		popup = data.popup
+		popUpView = new PopVidio.Views.PopUp(model: popup)
+		@$el.find('#pop_up').html(popUpView.$el)

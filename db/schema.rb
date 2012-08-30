@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120817235449) do
+ActiveRecord::Schema.define(:version => 20120830011430) do
 
   create_table "comments", :force => true do |t|
     t.integer  "video_id"
     t.string   "text"
-    t.integer  "timestamp"
-    t.integer  "duration"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.float    "timestamp",  :default => 0.0
+    t.float    "duration",   :default => 0.0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   create_table "videos", :force => true do |t|
