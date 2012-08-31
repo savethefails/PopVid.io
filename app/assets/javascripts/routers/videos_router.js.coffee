@@ -1,15 +1,16 @@
 class PopVidio.Routers.Videos extends Backbone.Router
 	routes:
 		'': 'index'
-		'videos/:id/edit': 'editVideoComments'
+		'videos/:id/edit': 'loadVideoComments'
 
 	index: ->
 		console.log 'index'
 
-	editVideoComments: (id) ->
+	loadVideoComments: (id) ->
 		@video = new PopVidio.Models.Video(id: id)
-		@video.fetch()
 		@edit_view = new PopVidio.Views.VideoEdit(model: @video, el: '#content')
+		@video.fetch()
+		
 
 	data: "LOCAL DATA"
 
