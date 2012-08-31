@@ -1,10 +1,10 @@
-window.PopVidio =
+@PopVidio =
   Models: {}
   Collections: {}
   Views: {}
   Routers: {}
   init: ->
-  	window.app = new PopVidio.Routers.Videos
+  	new PopVidio.Routers.Videos
   	Backbone.history.start(pushState: true)
 
 $(document).ready ->
