@@ -21,8 +21,9 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 			@player = new PopVidio.Models.Player({youtube_id: @model.get('youtube_id')})
 			$('body').append(@youtube_script_template())
 
+		app.comments = @model.get('comments')
 		@comments_view = new PopVidio.Views.Comments(
-							collection: @model.get('comments'))
+							collection: app.comments)
 		@$('#comments').html(@comments_view.render());
 
 		@

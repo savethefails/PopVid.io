@@ -8,9 +8,8 @@ class PopVidio.Routers.Videos extends Backbone.Router
 
 	loadVideoComments: (id) ->
 		@video = new PopVidio.Models.Video(id: id)
+		@edit_view = new PopVidio.Views.VideoEdit(model: @video, el: '#content')
 		@video.fetch()
-		new PopVidio.Views.VideoEdit(model: @video, el: '#content')
-		
 		
 
 	data: "LOCAL DATA"
