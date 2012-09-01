@@ -5,7 +5,7 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 	youtube_script_template: JST['videos/youtube_api_script']
 
 	initialize: (options) ->
-		console.log 'view init'
+		console.log 'video edit view init'
 		@model.on('change', @render, this)
 		$.subscribe "new:popup", @addPopUp
 		$.subscribe 'new:time', @updateMarker

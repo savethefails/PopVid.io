@@ -3,7 +3,7 @@ class PopVidio.Models.Video extends Backbone.RelationalModel
 		return "/videos/#{@id}"
 
 	initialize: (options) ->
-		console.log 'model init'
+		console.log 'video model init'
 
 	paramRoot: 'video'
 	 	 
