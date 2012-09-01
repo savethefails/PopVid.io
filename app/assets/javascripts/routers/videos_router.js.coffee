@@ -10,10 +10,3 @@ class PopVidio.Routers.Videos extends Backbone.Router
 		@video = new PopVidio.Models.Video(id: id)
 		@edit_view = new PopVidio.Views.VideoEdit(model: @video, el: '#content')
 		@video.fetch()
-		
-
-	data: "LOCAL DATA"
-
-	publish: (data) =>
-		console.log data
-		console.log @data
