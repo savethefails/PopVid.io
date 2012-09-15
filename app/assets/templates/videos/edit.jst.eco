@@ -3,7 +3,7 @@
 <div id="video_area">
 	<div id="youtube_player"></div>
 	<h2 id='pop_up'></h2>
-	<div id="marker"></div>
+	<!-- <div id="marker"></div> -->
 
 </div>
 
