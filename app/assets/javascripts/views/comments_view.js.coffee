@@ -2,6 +2,7 @@ class PopVidio.Views.Comments extends Backbone.View
 
 	initialize: (options) ->
 		$.subscribe 'new:time', @checkForComment
+		@collection.on 'add', @appendComment
 		@render()
 
 	render: =>
