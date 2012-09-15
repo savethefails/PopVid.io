@@ -5,7 +5,7 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 	youtube_script_template: JST['videos/youtube_api_script']
 
 	initialize: (options) ->
-		console.log 'view init'
+		console.log 'video edit view init'
 		@model.on('change', @render, this)
 		$.subscribe "new:popup", @addPopUp
 		# $.subscribe 'new:time', @updateMarker
@@ -21,12 +21,12 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 			@player = new PopVidio.Models.Player({youtube_id: @model.get('youtube_id')})
 			$('body').append(@youtube_script_template())
 
+		app.comments = @model.get('comments')
 		@comments_view = new PopVidio.Views.Comments(
-												    collection: @model.get('comments'), 
-												    el: @$('#comments')
-												    )
+							collection: app.comments)
+		@$('#comments').html(@comments_view.render());
 
-		this
+		@
 
 	addPopUp: (data) =>
 		console.log 'addPopup'
