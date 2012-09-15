@@ -1,15 +1,12 @@
 class PopVidio.Views.Comments extends Backbone.View
 
 	initialize: (options) ->
-		$.subscribe 'new:time', @updateTimer
 		$.subscribe 'new:time', @checkForComment
 		@render()
 
 	render: =>
-		@collection.each(@appendComment)
-		@$el.append("<li id='timer'>0</li>");
-		console.log 'collection'
-		console.log @collection
+		console.log 'Comments Render'
+		@$el
 
 	appendComment: (comment) =>
 		comment_view = new PopVidio.Views.Comment(model: comment)
