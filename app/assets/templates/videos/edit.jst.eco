@@ -2,7 +2,7 @@
 <ul id="comments"></ul>
 <div id="video_area">
 	<div id="youtube_player"></div>
-	<h2 id='pop_up'></h2>
+	<input id='pop_up' placeholder="Type Text Here!" disabled=true>
 	<!-- <div id="marker"></div> -->
 
 </div>

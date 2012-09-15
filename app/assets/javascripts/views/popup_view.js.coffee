@@ -5,12 +5,11 @@ class PopVidio.Views.PopUp extends Backbone.View
 	initialize: ->
 		console.log 'Pop Up Init'
 		$.subscribe "new:time", @monitorTime
-		@render()
 
 	render: =>
 		console.log 'Pop Up Render'
 
-		@$el.html(@model.get('text'))
+		@model.get('text')
 
 	monitorTime: (data) =>
 		console.log "monitorTime for #{@model.get('text')}"
@@ -21,7 +20,7 @@ class PopVidio.Views.PopUp extends Backbone.View
 		if time > endTime || time < @model.get('timestamp')
 			console.log 'Removing Pop-up'
 			$.unsubscribe "new:time", @monitorTime
-			@.remove
+			@remove
 			Backbone.View.prototype.remove.call(@);
 
 

@@ -12,4 +12,5 @@ class PopVidio.Views.Comment extends Backbone.View
 		'click': 'changeTime'
 
 	changeTime: ->
-		$.publish "change:time",	{time: @model.get('timestamp'), status: {pause: true}}
+		$.publish "change:time",	{time: @model.get('timestamp'),
+                              status: {pause: true}}
