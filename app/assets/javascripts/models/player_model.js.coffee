@@ -19,6 +19,7 @@ class PopVidio.Models.Player extends Backbone.Model
 		@.on 'change:currentTime', => $.publish "new:time", {time: @get('currentTime'), player: @}
 
 		$.subscribe "change:time", @skipToTime
+		$.subscribe "input:clicked", @pause
 
 		# Create a function that the Youtube API can reach,
 		# that references this model so we can keep all calls in here
@@ -66,6 +67,9 @@ class PopVidio.Models.Player extends Backbone.Model
 
 		if data.status.pause
 			@YTPlayer.pauseVideo()
+
+	pause: =>
+		@YTPlayer.pauseVideo()
 
 
 		

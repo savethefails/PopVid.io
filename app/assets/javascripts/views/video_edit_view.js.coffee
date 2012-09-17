@@ -10,6 +10,11 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 		$.subscribe "new:popup", @addPopUp
 		# $.subscribe 'new:time', @updateMarker
 
+	events: ->
+		'click #pop_up': ->
+			console.log 'input:clicked'
+			$.publish "input:clicked"
+
 
 	render: ->
 		console.log 'view render'
@@ -31,8 +36,8 @@ class PopVidio.Views.VideoEdit extends Backbone.View
 	addPopUp: (data) =>
 		console.log 'addPopup'
 		popup = data.popup
-		popUpView = new PopVidio.Views.PopUp(model: popup)
-		@$el.find('#pop_up').val(popUpView.render())
+		popUpView = new PopVidio.Views.PopUp(model: popup, el: @$el.find('#pop_up')[0])
+		# @$el.find('#pop_up').val(popUpView.render())
 
 	###updateMarker: (data) =>
 		percentDone = data.time / data.player.get('duration')
