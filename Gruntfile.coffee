@@ -61,7 +61,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default',
     'cleans, compiles, squashes',
-    ['clean:dirs', 'clean:app', 'coffee:compile', 'concat:squash', 'clean:dirs']
+    ['clean:dirs', 'clean:app', 'coffee:compile', 'sass:dist', 'concat:squash', 'clean:dirs']
 
 
 

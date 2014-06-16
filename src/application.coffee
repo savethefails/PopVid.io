@@ -1,23 +1,32 @@
 class YTPlayer extends Backbone.View
   currentTime: 0
+  video: 'SLffdgotHEA'
+  captionDuration: 2
+  ENTER: 13
+  ESC: 27
+
+  el: 'body'
 
   initialize: ->
-    # @model = new Backbone.Model currentTime: 0
-    @on 'change:currentTime', -> console.log arguments
+    $('html').on 'keydown', @onKeyDown
+    @on 'change:currentTime', @onTimeChange
     window.onYouTubeIframeAPIReady = @setupYoutube
+    @model = new Backbone.Model localStorage[@video]
 
   setupYoutube: =>
     @player = new YT.Player "player",
       height: "390"
       width: "640"
-      videoId: "SLffdgotHEA"
+      videoId: @video
       playerVars:
         controls: 1
 
     @player.addEventListener 'onReady', @onPlayerReady
     @player.addEventListener 'onStateChange', @onPlayerStateChange
 
-  onPlayerReady: (event) => @player.setPlaybackQuality 'large'
+  onPlayerReady: (event) =>
+    @player.setPlaybackQuality 'large'
+    @_intervalId = setInterval @getCurrentTime, 250
 
   roundToHalfSecond: (input) => @roundToFractionOfSecond(input, 2)
 
@@ -42,11 +51,21 @@ class YTPlayer extends Backbone.View
       @trigger 'change:currentTime', @currentTime, _oldTime
 
   onPlayerStateChange: (event) =>
-    if event.data == YT.PlayerState.PLAYING
-      @getCurrentTime()
-      @_intervalId = setInterval @getCurrentTime, 250
-    else
-      clearInterval @_intervalId
+    @locked = false if event.data is YT.PlayerState.PLAYING
+
+  onKeyDown: (e) =>
+    return unless e.currentTarget.tagName == 'HTML'
+    playerState = @player.getPlayerState()
+    if playerState isnt YT.PlayerState.PAUSED
+      @player.pauseVideo()
+      @$('textarea').focus()
+
+
+
+
+  onTimeChange: (current, old) =>
+
+
 
 
 ytPlayer = new YTPlayer()
