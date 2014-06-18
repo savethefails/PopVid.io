@@ -4,3 +4,4 @@ references
 application.css
 .sass-cache/*
 npm-debug.log
+vendor

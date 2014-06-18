@@ -1,17 +1,33 @@
+$textarea-height: 80px;
+$video-height: 390px;
+$video-width: 640px;
 .container{
   position:relative;
-  height: 390px;
+  height: $video-height + $textarea-height;
   width: 640px;
 }
 
 #player{
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
 }
 
 textarea{
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 0px;
+  width: $video-width - 4px;
+  height: $textarea-height;
+  margin: 0 auto;
+  left: 0;
+  background: transparent;
+  color: white;
+  font-size: 2em;
+  border: 0;
+  background: black;
+  &:focus {
+    box-shadow: 0;
+    border: 0;
+    outline: none;
+  }
 }
