@@ -1,0 +1,95 @@
+.container {
+  position: absolute;
+  height: 500px;
+  width: 640px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 50%;
+  margin-left: -320px;
+}
+
+form {
+  position: absolute;
+  top: 400px;
+  width: 100%;
+}
+form input {
+  width: 290px;
+  color: #888;
+}
+form button {
+  opacity: 0.5;
+}
+
+#player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+textarea {
+  position: absolute;
+  bottom: 152px;
+  width: 625px;
+  height: 80px;
+  margin: 0 auto;
+  left: 0;
+  background: transparent;
+  color: white;
+  font-size: 2em;
+  border: 0;
+  padding: 0.25em;
+  margin: 0.25em;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.centererer {
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  right: -5px;
+  bottom: 225px;
+  display: none;
+}
+
+.close {
+  float: right;
+  height: 21px;
+  width: 21px;
+  text-indent: -9999px;
+  position: absolute;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(0, 0, 0, 0.5);
+}
+.close:after {
+  font-size: 0.5em;
+  content: "\2716";
+  text-indent: 0;
+  display: block;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  font-size: 12px;
+}
+.close:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+.close:active {
+  cursor: pointer;
+}
+
+body.reveal textarea, body.reveal textarea:focus {
+  box-shadow: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+body.reveal .centererer {
+  display: block;
+}

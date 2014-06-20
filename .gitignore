@@ -1,7 +1,11 @@
 node_modules
+<<<<<<< HEAD
 application.js
 references
 application.css
+=======
+references
+>>>>>>> first
 .sass-cache/*
 npm-debug.log
 vendor
