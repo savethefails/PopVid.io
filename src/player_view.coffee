@@ -34,7 +34,7 @@ class PlayerView extends Backbone.View
     @on 'change:currentTime', @onTimeChange
     @initVideo()
     window.onYouTubeIframeAPIReady = @setupYoutube
-    $('input').val "#{@youtubeURL}#{@video}"
+    # $('input').val "#{@youtubeURL}#{@video}"
 
   initVideo: ->
     @getVideoIdFromLocation()
