@@ -321,7 +321,6 @@ PlayerView = (function(_super) {
     var playerTime, roundTime, _oldTime;
     playerTime = this.player.getCurrentTime();
     roundTime = this.roundToThirdSecond(playerTime);
-    console.log(roundTime);
     if (this.currentTime !== roundTime) {
       _oldTime = this.currentTime;
       this.currentTime = roundTime;
@@ -416,7 +415,7 @@ PlayerView = (function(_super) {
     "25.33": "nope",
     "28.33": "skat",
     "30.33": "(note the studio lighting...)",
-    "3.99": "doo doo doo",
+    "4": "doo doo doo",
     "35.33": "outta here junior",
     "44": "what's that thing again?",
     "46.66": "ERMAGHERD!!",
