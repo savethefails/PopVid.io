@@ -14,7 +14,7 @@ $form-margin: 10px;
   margin-left: -#{$video-width/2};
 
 }
-.form {
+form {
   position: absolute;
   top: $video-height + $form-margin;
   width: 100%;

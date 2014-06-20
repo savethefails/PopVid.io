@@ -13,7 +13,7 @@ class PlayerView extends Backbone.View
     'mouseleave textarea': 'onmouseleave'
     'mouseenter .centererer': 'onmouseenter'
     'mouseleave .centererer': 'onmouseleave'
-    'click .load': 'onLoadClick'
+    'submit form': 'onFormSubmit'
 
   playerVars: =>
     start = if @video is 'JsdAwdhd0Aw' then 2 else 0
@@ -165,16 +165,8 @@ class PlayerView extends Backbone.View
                       @$el.removeClass('reveal')
                     , 50
 
-  onLoadClick: (e) ->
+  onFormSubmit: (e) ->
     e.preventDefault()
-
-    if @_intervalId
-      clearInterval @_intervalId
-      delete @_intervalId
-      @captionsView?.leave()
-      return @$('.load').click()
-
-
     @getVideoIdFromInput()
     @redirectToVideo()
 
