@@ -170,7 +170,7 @@ class PlayerView extends Backbone.View
     @getVideoIdFromInput()
     @redirectToVideo()
 
-  JsdAwdhd0Aw: {"11":"smells ok...","20":"c'mon I can take ya","5.33":"holy crap","7.66":"what's that?","13.99":"ERMAHGERD!!","17.659999999999997":"stay still!","22.659999999999997":"don't you get any closer","25.33":"nope","28.33":"skat","30.33":"(note the studio lighting...)","3.99":"doo doo doo","35.33":"outta here junior","43.989999999999995":"what's that thing again?","46.66":"ERMAGHERD!!","53.33":"[exit stage left]"}
+  JsdAwdhd0Aw: {"11":"smells ok...","20":"c'mon I can take ya","5.33":"holy crap","7.66":"what's that?","14":"ERMAHGERD!!","17.66":"stay still!","22.66":"don't you get any closer","25.33":"nope","28.33":"skat","30.33":"(note the studio lighting...)","3.99":"doo doo doo","35.33":"outta here junior","44":"what's that thing again?","46.66":"ERMAGHERD!!","53.33":"[exit stage left]"}
 
   # http://stackoverflow.com/a/647272
   getQueryString: ->
