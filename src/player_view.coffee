@@ -5,32 +5,41 @@ class PlayerView extends Backbone.View
   el: 'body'
 
   events:
-    'click button': 'onCloseClick'
+    'click .close': 'onCloseClick'
     'focus textarea': 'onFocusTextarea'
     'blur textarea': 'onBlurTextarea'
-    'mouseenter textarea': 'onmouseenterTextarea'
-    'mouseleave textarea': 'onmouseleaveTextarea'
-    'mouseenter .centererer': 'onmouseenterTextarea'
-    'mouseleave .centererer': 'onmouseleaveTextarea'
+    'mouseenter textarea': 'onmouseenter'
+    'mouseleave textarea': 'onmouseleave'
+    'mouseenter .centererer': 'onmouseenter'
+    'mouseleave .centererer': 'onmouseleave'
+    'click .load': 'onLoadClick'
 
-  onmouseenterTextarea: ->
-    return if @player.getPlayerState() is 5
-    clearTimeout @_revealTimer
-    @$el.addClass('reveal')
+  playerVars: =>
+    start = if @video is 'JsdAwdhd0Aw' then 2 else 0
 
-  onmouseleaveTextarea: ->
-    return if @$('textarea').is(":focus")
-    @_revealTimer = setTimeout =>
-                      @$el.removeClass('reveal')
-                    , 50
-
+    controls: 1
+    iv_load_policy: 3
+    autoplay: 1
+    autohide: 1
+    modestbranding: 1
+    rel: 0
+    showinfo: 0
+    start: start
 
   initialize: ->
     $('html').on 'keydown', @onKeyDownHTML
     @on 'change:currentTime', @onTimeChange
+    @initVideo()
     window.onYouTubeIframeAPIReady = @setupYoutube
+
+  initVideo: ->
+    @getVideoId()
     @preloadCaps()
     @model = new CaptionsModel @getSavedCaps(), video: @video
+
+  getVideoId: ->
+    split = @$('input').val().match(/.*v=(\w*)\W*/, '')
+    @video = split[1] if split?
 
   getSavedCaps: ->
     savedCaptions = if localStorage[@video]? then JSON.parse localStorage[@video] else {}
@@ -59,23 +68,17 @@ class PlayerView extends Backbone.View
 
     setInterval @getCurrentTime, 500
 
+  width: "640"
+  height: "390"
+
   setupYoutube: =>
     @player = new YT.Player "player",
-      height: "390"
-      width: "640"
+      height: @height
+      width: @width
       videoId: @video
-      playerVars:
-        controls: 1
-        iv_load_policy: 3
-        autoplay: 1
-        autohide: 1
-        modestbranding: 1
-        rel: 0
-        showinfo: 0
-        start: 2
+      playerVars: @playerVars()
 
     @player.addEventListener 'onReady', @onPlayerReady
-    @player.addEventListener 'onStateChange', @onPlayerStateChange
 
   onPlayerReady: (event) =>
     @player.setPlaybackQuality 'large'
@@ -105,10 +108,9 @@ class PlayerView extends Backbone.View
       @trigger 'change:currentTime', @currentTime, _oldTime
       # console.log 'currentTime', @currentTime
 
-  onPlayerStateChange: (event) => {}
 
   onKeyDownHTML: (e) =>
-    return unless e.currentTarget.tagName == 'HTML'
+    return unless e.target.tagName == 'BODY'
     @createCaptionsView()
     @$('textarea').focus()
     @$el.addClass('reveal');
@@ -125,9 +127,9 @@ class PlayerView extends Backbone.View
     , 50
 
   onCloseClick: ->
-    console.log '-----------------'
-    console.log ''
-    console.log '** onCloseClick'
+    # console.log '-----------------'
+    # console.log ''
+    # console.log '** onCloseClick'
     @captionsView?.delete()
 
   createCaptionsView: ->
@@ -145,5 +147,32 @@ class PlayerView extends Backbone.View
       # console.log "@#{current}) FOUND -- #{@model.get(current)} -- currentView: #{@captionsView?}"
       @captionsView?.leave()
       @createCaptionsView().render()
+
+  onmouseenter: ->
+    return if @player.getPlayerState() is 5
+    clearTimeout @_revealTimer
+    @$el.addClass('reveal')
+
+  onmouseleave: ->
+    return if @$('textarea').is(":focus")
+    @_revealTimer = setTimeout =>
+                      @$el.removeClass('reveal')
+                    , 50
+
+  onLoadClick: (e) ->
+    e.preventDefault()
+
+    if @_intervalId
+      clearInterval @_intervalId
+      delete @_intervalId
+      @captionsView?.leave()
+      return @$('.load').click()
+
+    @initVideo()
+    console.log @video
+    @player.loadVideoById
+      videoId: @video
+      playerVars: @playerVars()
+    @onPlayerReady()
 
   JsdAwdhd0Aw: {"11":"smells ok...","20":"c'mon I can take ya","5.33":"holy crap","7.66":"what's that?","13.99":"ERMAHGERD!!","17.659999999999997":"stay still!","22.659999999999997":"don't you get any closer","25.33":"nope","28.33":"skat","30.33":"(note the studio lighting...)","3.99":"doo doo doo","35.33":"outta here junior","43.989999999999995":"what's that thing again?","46.66":"ERMAGHERD!!","53.33":"[exit stage left]"}

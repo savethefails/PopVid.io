@@ -20,7 +20,7 @@ class CaptionView extends Backbone.View
     @initialState = @player.getPlayerState()
     @backupCaption = @model.get @startTime
     @$el.data('current-view', @cid)
-    console.log 'CREATE view', @cid, "-- #{@model.get(@startTime)}"
+    # console.log 'CREATE view', @cid, "-- #{@model.get(@startTime)}"
     @listenTo @parentView, 'change:currentTime', @onTimeChange
 
   render: ->
@@ -43,7 +43,7 @@ class CaptionView extends Backbone.View
       @_preventWrite = true
       @$el.blur()
       delete @_preventWrite
-      console.log @_preventWrite
+      # console.log @_preventWrite
       return false
 
   onBlur: =>
@@ -59,14 +59,14 @@ class CaptionView extends Backbone.View
   resetCaption: => @$el.val @backupCaption if @backupCaption?
 
   delete: =>
-    console.log ''
-    console.log "deleting --- #{@model.get("#{@startTime}")}"
+    # console.log ''
+    # console.log "deleting --- #{@model.get("#{@startTime}")}"
     @model.unset("#{@startTime}")
     @leave()
 
   leave: ->
-    console.log @currentTime, 'LEAVE', @cid, "-- #{@model.get(@startTime)}"
-    console.log ''
+    # console.log @currentTime, 'LEAVE', @cid, "-- #{@model.get(@startTime)}"
+    # console.log ''
     @undelegateEvents()
     @stopListening @parentView
     # Another view may have control of this view
