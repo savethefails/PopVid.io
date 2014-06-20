@@ -91,11 +91,15 @@ class PlayerView extends Backbone.View
     @_intervalId = setInterval @getCurrentTime, 250
 
   roundToHalfSecond: (input) => @roundToFractionOfSecond(input, 2)
-  roundToThirdSecond: (input) => @roundToFractionOfSecond(input, 3)
+  roundToThirdSecond: (input) =>
+    output = @roundToFractionOfSecond(input, 3)
+    output = Math.ceil(output) if output % 1 > 0.9
+    return output
+
 
   roundToFractionOfSecond: (input, timesPerSecond = 2) ->
     output = Math.floor input # strip decimals
-    remainder = input % 1 # get remainder
+    remainder = Math.ceil((input % 1) * 100) / 100 # get remainder
     fractionOfSecond = (Math.floor((1/timesPerSecond) * 100))/100
 
     for i in [0..timesPerSecond-1]
@@ -108,6 +112,7 @@ class PlayerView extends Backbone.View
   getCurrentTime: =>
     playerTime = @player.getCurrentTime()
     roundTime = @roundToThirdSecond playerTime
+    console.log roundTime
     if @currentTime isnt roundTime
       _oldTime = @currentTime
       @currentTime = roundTime
