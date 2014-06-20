@@ -1,1 +1,1 @@
-ytPlayer = new YTPlayerView()
+player = new PlayerView()

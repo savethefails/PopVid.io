@@ -37,7 +37,7 @@ module.exports = (grunt) ->
 
     concat:
         squash:
-          src: ['js/captions_model.js', 'js/caption_view.js', 'js/ytplayer_view.js', 'js/application.js']
+          src: ['js/captions_model.js', 'js/caption_view.js', 'js/player_view.js', 'js/application.js']
           dest: './application.js'
 
     connect:

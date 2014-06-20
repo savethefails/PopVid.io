@@ -1,22 +1,23 @@
 $textarea-height: 80px;
 $video-height: 390px;
 $video-width: 640px;
+$textarea-bottom: 42px;
 .container{
   position:relative;
-  height: $video-height + $textarea-height;
-  width: 640px;
+  height: $video-height;
+  width: $video-width;
 }
 
 #player{
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
 }
 
 textarea{
   position: absolute;
-  top: 0px;
-  width: $video-width - 4px;
+  bottom: $textarea-bottom;
+  width: $video-width - 15px;
   height: $textarea-height;
   margin: 0 auto;
   left: 0;
@@ -24,10 +25,63 @@ textarea{
   color: white;
   font-size: 2em;
   border: 0;
-  background: black;
-  &:focus {
+  padding: 0.25em;
+  margin: 0.25em;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.centererer {
+  position:           absolute;
+  height:             26px;
+  width:              26px;
+  right: -5px;
+  bottom: 115px;
+  display: none;
+}
+
+.close {
+  float:            right;
+  height:           21px;
+  width:            21px;
+  text-indent:      -9999px;
+  position:         absolute;
+  text-decoration:  none;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: rgba(255,255,255,0.2);
+  color: rgba(0,0,0,0.5);
+
+
+  &:after {
+    font-size: 0.5em;
+    content:        "\2716";
+    text-indent:    0;
+    display:        block;
+    position:       absolute;
+    top:            2px;
+    right:          5px;
+    font-size:      12px;
+  }
+
+  &:hover {
+    background: rgba(255,255,255,0.8);
+    color: rgba(0,0,0,0.4);
+    cursor:         pointer;
+  }
+
+  &:active {
+    cursor:         pointer;
+  }
+
+}
+
+body.reveal{
+    textarea, textarea:focus {
     box-shadow: 0;
-    border: 0;
+    border: 1px solid rgba(255,255,255,0.2);
     outline: none;
   }
+  .centererer { display: block; }
 }

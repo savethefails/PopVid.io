@@ -9,21 +9,25 @@ class CaptionView extends Backbone.View
 
   events:
     'keydown': 'onKeyDownTextarea'
-    'blur': 'saveCaptions'
+    'blur': 'onBlur'
 
   initialize: (options = {}) ->
-    console.log 'create view', @cid
+
     @model = options.model
     @player = options.player
     @parentView = options.parentView
     @startTime = options.startTime
+    @initialState = @player.getPlayerState()
+    @backupCaption = @model.get @startTime
+    @$el.data('current-view', @cid)
+    console.log 'CREATE view', @cid, "-- #{@model.get(@startTime)}"
     @listenTo @parentView, 'change:currentTime', @onTimeChange
 
   render: ->
     @$el.val @model.get "#{@startTime}"
 
   onTimeChange: (currentTime) ->
-    console.log 'parentView time', currentTime
+    @currentTime = currentTime
     @leave() if currentTime >= @startTime + @duration
     @leave() if currentTime < @startTime
 
@@ -34,15 +38,39 @@ class CaptionView extends Backbone.View
       @$el.blur()
       return false
 
-  saveCaptions: =>
-    @model.set "#{@startTime}", @$el.val()
+    if e.keyCode is @ESC
+      e.preventDefault()
+      @_preventWrite = true
+      @$el.blur()
+      delete @_preventWrite
+      console.log @_preventWrite
+      return false
+
+  onBlur: =>
+    if @_preventWrite
+      @resetCaption()
+    else
+      @saveCaption()
+
     @player.playVideo() if @player.getPlayerState() isnt YT.PlayerState.PLAYING
 
+  saveCaption: => @model.set("#{@startTime}", val) if (val = @$el.val()) isnt ''
+
+  resetCaption: => @$el.val @backupCaption if @backupCaption?
+
+  delete: =>
+    console.log ''
+    console.log "deleting --- #{@model.get("#{@startTime}")}"
+    @model.unset("#{@startTime}")
+    @leave()
+
   leave: ->
-    console.log 'leave view', @cid, "-- #{@model.get(@startTime)}"
+    console.log @currentTime, 'LEAVE', @cid, "-- #{@model.get(@startTime)}"
     console.log ''
     @undelegateEvents()
     @stopListening @parentView
-    @$el.val('')
-    @$el.blur()
+    # Another view may have control of this view
+    if @$el.data('current-view') is @cid
+      @$el.val('')
+      @$el.blur()
     @done = true
