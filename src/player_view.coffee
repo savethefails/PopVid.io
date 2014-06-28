@@ -1,6 +1,6 @@
 class PlayerView extends Backbone.View
   currentTime: -1
-  video: 'JsdAwdhd0Aw'
+  video: 'bNT-CT25clM'
   youtubeURL: 'https://www.youtube.com/watch?v='
 
   el: 'body'
@@ -14,6 +14,7 @@ class PlayerView extends Backbone.View
     'mouseenter .centererer': 'onmouseenter'
     'mouseleave .centererer': 'onmouseleave'
     'submit form': 'onFormSubmit'
+    'click .share': 'shareCaptions'
 
   playerVars: =>
     start = if @video is 'JsdAwdhd0Aw' then 2 else 0
@@ -51,6 +52,8 @@ class PlayerView extends Backbone.View
     savedCaptions = if localStorage[@video]? then JSON.parse localStorage[@video] else {}
 
   preloadCaps: ->
+    urlCaptions = @getQueryString().c
+    localStorage[@video] = decodeURIComponent(urlCaptions) if urlCaptions?
     localStorage[@video] = JSON.stringify(@[@video]) if @[@video]? and not localStorage[@video]?
 
   mockupPlayer: =>
@@ -187,4 +190,9 @@ class PlayerView extends Backbone.View
     result
 
   redirectToVideo: (video = @video) ->
-    location.href = "#{location.origin}#{location.pathname}?v=#{video}"
+    location.href = @buildVideoUrl video
+
+  buildVideoUrl: (video = @video) -> "#{location.origin}#{location.pathname}?v=#{video}"
+
+  shareCaptions: ->
+    alert "-----------------------\nCopy and share this URL:\n-----------------------\n\n\n#{@buildVideoUrl()}&c=#{encodeURIComponent(localStorage[@video])}"
