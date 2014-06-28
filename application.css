@@ -21,6 +21,12 @@ form button {
   opacity: 0.5;
 }
 
+.share {
+  position: absolute;
+  top: 400px;
+  right: 0;
+}
+
 #player {
   position: absolute;
   top: 0;
@@ -40,7 +46,7 @@ textarea {
   border: 0;
   padding: 0.25em;
   margin: 0.25em;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
   text-align: center;
   box-sizing: border-box;
 }

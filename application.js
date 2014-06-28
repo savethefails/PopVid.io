@@ -165,7 +165,7 @@ PlayerView = (function(_super) {
 
   PlayerView.prototype.currentTime = -1;
 
-  PlayerView.prototype.video = 'JsdAwdhd0Aw';
+  PlayerView.prototype.video = 'bNT-CT25clM';
 
   PlayerView.prototype.youtubeURL = 'https://www.youtube.com/watch?v=';
 
@@ -179,7 +179,8 @@ PlayerView = (function(_super) {
     'mouseleave textarea': 'onmouseleave',
     'mouseenter .centererer': 'onmouseenter',
     'mouseleave .centererer': 'onmouseleave',
-    'submit form': 'onFormSubmit'
+    'submit form': 'onFormSubmit',
+    'click .share': 'shareCaptions'
   };
 
   PlayerView.prototype.playerVars = function() {
@@ -233,6 +234,11 @@ PlayerView = (function(_super) {
   };
 
   PlayerView.prototype.preloadCaps = function() {
+    var urlCaptions;
+    urlCaptions = this.getQueryString().c;
+    if (urlCaptions != null) {
+      localStorage[this.video] = decodeURIComponent(urlCaptions);
+    }
     if ((this[this.video] != null) && (localStorage[this.video] == null)) {
       return localStorage[this.video] = JSON.stringify(this[this.video]);
     }
@@ -438,7 +444,18 @@ PlayerView = (function(_super) {
     if (video == null) {
       video = this.video;
     }
-    return location.href = "" + location.origin + location.pathname + "?v=" + video;
+    return location.href = this.buildVideoUrl(video);
+  };
+
+  PlayerView.prototype.buildVideoUrl = function(video) {
+    if (video == null) {
+      video = this.video;
+    }
+    return "" + location.origin + location.pathname + "?v=" + video;
+  };
+
+  PlayerView.prototype.shareCaptions = function() {
+    return alert("-----------------------\nCopy and share this URL:\n-----------------------\n\n\n" + (this.buildVideoUrl()) + "&c=" + (encodeURIComponent(localStorage[this.video])));
   };
 
   return PlayerView;
